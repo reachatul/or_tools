@@ -152,14 +152,36 @@ $$
 \sum_{s}sinkLiterals_{d, s} = 1 \ \ \forall d
 $$
 
+A shift can either go to the last shift or some other shift $o \in S$.
 $$
 sinkLiteral_{d, s} + sequenceLiteral_{d, s, o} + \neg performed_{d, s} = 1 \ \ \forall d, s
 $$
 
+A shift can either be the first shift or start after some other shift $o \in S$.
 $$
 sourceLiteral_{d, s} + sequencLiteral_{d, o, s} + \neg performed_{d, s} = 1 \ \ forall \  d, s
 $$
 
+
+### Make sure each shift is covered
+
+Make sure each shift is performed by at least one driver.
+
+$$
+\sum_{d}performed_{d, s} = 1 \ \ \forall s \in S
+$$
+
+Shared incoming literal: A shift should either start from source or continue from some other shift $o \in S$.
+
+$$
+\sum_{d}sourceLiteral_{s} + \sum_{d, o}sequenceLiteral_{d, o, s} = 1 \  \forall \ s
+$$
+
+Shared outgoing literal: A shift should either end in sink or should either come from some other shift $o \in S$.
+
+$$
+\sum_{d}sinkLiteral_{d, s} + \sum_{d, o} sequenceLiteral_{d, o, s} = 1 \ \forall \ s 
+$$
 
 
 
