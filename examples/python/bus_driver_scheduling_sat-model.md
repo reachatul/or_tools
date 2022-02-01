@@ -42,6 +42,8 @@ $duration_s$
 
 $cleanUpTime$
 
+$totalDrivingTime = \sum_{s}duration_{S}$
+
 ## Constraints:
 
 ### Source Constraints
@@ -184,4 +186,19 @@ $$
 $$
 
 
+### Symmetry breaking constraints
+
+Break symmetries in solution to find the optimal solution faster.
+We know that the first three shifts will definitely be allocated different drivers.
+$$
+startingShifts_{0, 0} = 1 \newline
+startingShifts_{1, 1} = 1 \newline
+startingShifts_{2, 2} = 1 \newline
+$$
+
+### Total driving time of drivers should be equal to the $totalDrivingTime$ parameter.
+
+$$
+\sum_{d}drivingTimes_{d} = totalDrivingTimes_{d}
+$$
 
