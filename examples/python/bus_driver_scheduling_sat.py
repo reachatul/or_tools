@@ -1781,6 +1781,7 @@ def bus_driver_scheduling(minimize_drivers, max_num_drivers):
         # Create all the shift variables before iterating on the transitions
         # between these shifts.
         for s in range(num_shifts):
+            # If a driver is assigned to a shift, what would be his driving time and no break time.
             total_driving[d, s] = model.NewIntVar(0, max_driving_time,
                                                   'dr_%i_%i' % (d, s))
             no_break_driving[d, s] = model.NewIntVar(
@@ -1797,7 +1798,9 @@ def bus_driver_scheduling(minimize_drivers, max_num_drivers):
             source_lit = model.NewBoolVar('%i from source to %i' % (d, s))
             outgoing_source_literals.append(source_lit)
             incoming_literals[s].append(source_lit)
+
             shared_incoming_literals[s].append(source_lit)
+
             model.Add(start_times[d] == shift[3] -
                       setup_time).OnlyEnforceIf(source_lit)
             model.Add(total_driving[d, s] == duration).OnlyEnforceIf(source_lit)
@@ -1843,6 +1846,7 @@ def bus_driver_scheduling(minimize_drivers, max_num_drivers):
                 delay = other[3] - shift[4]
                 if delay < min_delay_between_shifts:
                     continue
+                # Sequence Literal
                 lit = model.NewBoolVar('%i from %i to %i' % (d, s, o))
 
                 # Increase driving time
